@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +13,42 @@
   body {
     @apply bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
   }
+
+  /* Font family classes */
+  .font-sf-pro {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .font-inter {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .font-atkinson {
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  }
+
+  /* Font size classes */
+  .text-large {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  /* High contrast mode */
+  .high-contrast {
+    @apply bg-white dark:bg-black;
+  }
+
+  .high-contrast * {
+    @apply border-gray-800 dark:border-gray-200;
+  }
+
+  .high-contrast .text-gray-600 {
+    @apply text-gray-800 dark:text-gray-200;
+  }
+
+  .high-contrast .text-gray-400 {
+    @apply text-gray-700 dark:text-gray-300;
+  }
 }
 
 @layer components {
@@ -19,14 +56,16 @@
     @apply bg-blue-500 text-white px-6 py-3 rounded-2xl font-medium 
            hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
            transition-all duration-200 transform hover:scale-105 active:scale-95
-           dark:bg-blue-600 dark:hover:bg-blue-700;
+           dark:bg-blue-600 dark:hover:bg-blue-700
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
   }
   
   .btn-secondary {
     @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-2xl font-medium 
            hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 
            transition-all duration-200 transform hover:scale-105 active:scale-95
-           dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+           dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
   }
   
   .input-field {
@@ -43,5 +82,37 @@
   .modal-content {
     @apply bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl max-w-md w-full p-8 
            animate-fade-in dark:bg-gray-800/90;
+  }
+
+  /* Neumorphism style */
+  .neumorphism {
+    @apply bg-gray-100 dark:bg-gray-800;
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.1),
+      -8px -8px 16px rgba(255, 255, 255, 0.8);
+  }
+
+  .neumorphism-inset {
+    @apply bg-gray-100 dark:bg-gray-800;
+    box-shadow: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+      inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+  }
+
+  /* Minimal dark style */
+  .minimal-dark {
+    @apply bg-black text-white;
+  }
+
+  .minimal-dark * {
+    @apply border-gray-800;
+  }
+
+  .minimal-dark .bg-white\/90 {
+    @apply bg-gray-900/90;
+  }
+
+  .minimal-dark .text-gray-600 {
+    @apply text-gray-400;
   }
 }

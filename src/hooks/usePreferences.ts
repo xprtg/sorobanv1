@@ -12,6 +12,10 @@ const defaultPreferences: UserPreferences = {
   darkMode: false,
   showRealTimeSum: false,
   visualStyle: 'apple',
+  fontSize: 'normal',
+  fontFamily: 'inter',
+  highContrast: false,
+  notificationsEnabled: false,
 };
 
 export function usePreferences() {
