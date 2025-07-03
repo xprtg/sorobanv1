@@ -18,16 +18,16 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-fade-in">
-        <h2 className="text-2xl font-light text-gray-900 mb-6 text-center">
+    <div className="modal-backdrop">
+      <div className="modal-content animate-slide-up">
+        <h2 className="text-2xl font-light text-gray-900 dark:text-white mb-6 text-center">
           Configurar Práctica
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tiempo entre números (segundos)
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Tiempo entre números
             </label>
             <select
               value={localConfig.timeBetweenNumbers}
@@ -35,7 +35,7 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
                 ...localConfig,
                 timeBetweenNumbers: parseInt(e.target.value)
               })}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="input-field"
             >
               <option value={1}>1 segundo</option>
               <option value={2}>2 segundos</option>
@@ -46,7 +46,7 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Cantidad de números
             </label>
             <select
@@ -55,7 +55,7 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
                 ...localConfig,
                 numberOfNumbers: parseInt(e.target.value)
               })}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="input-field"
             >
               <option value={5}>5 números</option>
               <option value={10}>10 números</option>
@@ -67,7 +67,7 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Número mínimo
               </label>
               <input
@@ -79,11 +79,11 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
                 })}
                 min="1"
                 max="999"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="input-field"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Número máximo
               </label>
               <input
@@ -95,14 +95,88 @@ export function ConfigModal({ config, onStart, isOpen }: ConfigModalProps) {
                 })}
                 min="1"
                 max="999"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="input-field"
               />
             </div>
           </div>
 
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Lectura por voz
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Lee los números en voz alta
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLocalConfig({
+                  ...localConfig,
+                  voiceEnabled: !localConfig.voiceEnabled
+                })}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  localConfig.voiceEnabled ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-700'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    localConfig.voiceEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Suma en tiempo real
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Muestra la suma acumulada
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLocalConfig({
+                  ...localConfig,
+                  showRealTimeSum: !localConfig.showRealTimeSum
+                })}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  localConfig.showRealTimeSum ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-700'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    localConfig.showRealTimeSum ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Estilo visual
+            </label>
+            <select
+              value={localConfig.visualStyle}
+              onChange={(e) => setLocalConfig({
+                ...localConfig,
+                visualStyle: e.target.value as any
+              })}
+              className="input-field"
+            >
+              <option value="apple">Apple (Clásico)</option>
+              <option value="professional">Profesional</option>
+              <option value="dojo">Dojo Japonés</option>
+            </select>
+          </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-4 px-6 rounded-xl font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-105"
+            className="btn-primary w-full"
           >
             Comenzar Práctica
           </button>

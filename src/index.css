@@ -1,3 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-500 text-white px-6 py-3 rounded-2xl font-medium 
+           hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
+           transition-all duration-200 transform hover:scale-105 active:scale-95
+           dark:bg-blue-600 dark:hover:bg-blue-700;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-2xl font-medium 
+           hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 
+           transition-all duration-200 transform hover:scale-105 active:scale-95
+           dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-2xl 
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+           transition-all duration-200
+           dark:bg-gray-800 dark:border-gray-700 dark:text-white;
+  }
+  
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center p-4 z-50;
+  }
+  
+  .modal-content {
+    @apply bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl max-w-md w-full p-8 
+           animate-fade-in dark:bg-gray-800/90;
+  }
+}
