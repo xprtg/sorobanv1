@@ -84,6 +84,7 @@ export interface Achievement {
   color: string;
   isSecret: boolean;
   reward?: Reward;
+  progressSource?: keyof UserStats;
 }
 
 export interface UserStats {

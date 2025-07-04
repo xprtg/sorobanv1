@@ -136,5 +136,21 @@
     "achievementUnlocked": "Achievement unlocked!",
     "streakMilestone": "New streak milestone!",
     "dailyReminder": "Time to practice"
+  },
+  "tutorial": {
+    "intro": {
+      "title": "What is the Soroban?",
+      "content": "The soroban is the Japanese abacus, an ancient tool for calculation and mental training. You will learn to add and visualize numbers quickly and in a fun way."
+    },
+    "structure": {
+      "title": "Soroban Structure",
+      "content": "The soroban has columns (each represents a digit) and upper beads (worth 5) and lower beads (worth 1). Learn to identify each part."
+    },
+    "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "back": "Back",
+    "exit": "Exit tutorial",
+    "finish": "Finish tutorial"
   }
 } 

@@ -14,6 +14,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 1,
     color: 'bg-green-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'five-sessions',
@@ -27,6 +28,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 5,
     color: 'bg-blue-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'ten-sessions',
@@ -40,6 +42,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 10,
     color: 'bg-indigo-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'fifty-sessions',
@@ -53,6 +56,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 50,
     color: 'bg-yellow-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'hundred-sessions',
@@ -66,6 +70,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 100,
     color: 'bg-gradient-to-r from-yellow-400 to-orange-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'mini-habit',
@@ -79,6 +84,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 14,
     color: 'bg-purple-500',
     isSecret: false,
+    progressSource: 'currentStreak',
   },
   {
     id: 'commitment',
@@ -92,6 +98,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 100,
     color: 'bg-emerald-500',
     isSecret: false,
+    progressSource: 'totalSessions',
   },
   {
     id: 'three-day-streak',
@@ -105,6 +112,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 3,
     color: 'bg-purple-500',
     isSecret: false,
+    progressSource: 'currentStreak',
   },
   {
     id: 'week-streak',
@@ -118,6 +126,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 7,
     color: 'bg-pink-500',
     isSecret: false,
+    progressSource: 'currentStreak',
   },
   {
     id: 'month-streak',
@@ -131,6 +140,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 30,
     color: 'bg-violet-500',
     isSecret: false,
+    progressSource: 'currentStreak',
   },
   {
     id: 'ultimate-streak',
@@ -144,6 +154,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 100,
     color: 'bg-gradient-to-r from-green-400 to-emerald-500',
     isSecret: false,
+    progressSource: 'currentStreak',
   },
 
   // === RENDIMIENTO ===
@@ -159,6 +170,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 1,
     color: 'bg-yellow-500',
     isSecret: false,
+    progressSource: 'exactMatches',
   },
   {
     id: 'ten-perfect',
@@ -172,6 +184,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 10,
     color: 'bg-indigo-500',
     isSecret: false,
+    progressSource: 'exactMatches',
   },
   {
     id: 'fifty-perfect',
@@ -185,6 +198,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 50,
     color: 'bg-purple-500',
     isSecret: false,
+    progressSource: 'exactMatches',
   },
   {
     id: 'hundred-perfect',
@@ -198,6 +212,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     maxProgress: 100,
     color: 'bg-gradient-to-r from-purple-400 to-pink-500',
     isSecret: false,
+    progressSource: 'exactMatches',
   },
   {
     id: 'accuracy-master',

@@ -3,6 +3,7 @@ import { PracticeConfig, PracticeState } from "../types";
 import { CountdownCircle } from "./CountdownCircle";
 import { useSpeech } from "../hooks/useSpeech";
 import { ResultComparison } from "./ResultComparison";
+import { calculateXPEarned } from '../constants/levels';
 
 interface SorobanPracticeProps {
   config: PracticeConfig;
@@ -26,6 +27,9 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
   const [startTime, setStartTime] = useState<number>(0);
   const [showResultComparison, setShowResultComparison] = useState(false);
   const [sessionData, setSessionData] = useState<any>(null);
+  const [answers, setAnswers] = useState<Array<{userResult?: number, isCorrect?: boolean, skipped?: boolean}>>([]);
+  // Cambiar: el avance debe ocurrir tras feedback, ANTES de mostrar el input
+  const [pendingAdvance, setPendingAdvance] = useState(false);
 
   const { speak, stop } = useSpeech();
 
@@ -62,14 +66,25 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
       // Practice complete
       const total = state.numbersShown.reduce((sum, num) => sum + num, 0);
       const duration = Math.floor((Date.now() - startTime) / 1000);
-      
+      // Calcular XP y precisión
+      const correctCount = answers.filter(a => a.isCorrect).length;
+      const totalAnswered = answers.filter(a => !a.skipped).length;
+      const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
       const sessionData = {
         config,
         numbers: state.numbersShown,
         total,
         duration,
+        correctCount,
+        totalAnswered,
+        accuracy,
+        answers,
+        xpEarned: 0,
       };
-      
+      // Calcular XP usando la función centralizada y validar
+      let xpEarned = calculateXPEarned({ ...sessionData, isCorrect: accuracy === 100 });
+      if (typeof xpEarned !== 'number' || xpEarned < 0 || isNaN(xpEarned)) xpEarned = 0;
+      sessionData.xpEarned = xpEarned;
       setSessionData(sessionData);
       setState(prev => ({
         ...prev,
@@ -77,7 +92,6 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
         isComplete: true,
         total,
       }));
-      
       setShowResultComparison(true);
       return;
     }
@@ -100,18 +114,15 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
   };
 
   const handleResultSubmit = (userResult: number, isCorrect: boolean, difference: number) => {
-    const finalSessionData = {
-      ...sessionData,
-      userResult,
-      isCorrect,
-      difference,
-    };
-    
-    onComplete(finalSessionData);
+    setAnswers(prev => ([...prev, { userResult, isCorrect, skipped: false }]));
+    setPendingAdvance(true);
+    setShowResultComparison(false);
   };
 
   const handleSkipResult = () => {
-    onComplete(sessionData);
+    setAnswers(prev => ([...prev, { skipped: true }]));
+    setPendingAdvance(true);
+    setShowResultComparison(false);
   };
 
   const stopPractice = () => {
@@ -161,24 +172,45 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
     }
   }, [state.countdown, state.isShowing, state.isComplete]);
 
+  // Nuevo efecto: cuando pendingAdvance es true y no se está mostrando feedback, avanzar
+  useEffect(() => {
+    if (pendingAdvance && !showResultComparison) {
+      setPendingAdvance(false);
+      // Solo avanzar si no estamos ya en el último número o en resumen
+      if (!state.isComplete) {
+        showNextNumber();
+      }
+    }
+  }, [pendingAdvance, showResultComparison, state.isComplete]);
+
+  // Llama a onComplete automáticamente al finalizar la práctica
+  useEffect(() => {
+    if (state.isComplete && sessionData) {
+      onComplete(sessionData);
+    }
+    // Solo debe llamarse una vez por sesión
+    // eslint-disable-next-line
+  }, [state.isComplete, sessionData]);
+
   if (showResultComparison) {
     return (
       <ResultComparison
         correctTotal={state.total}
         onResultSubmit={handleResultSubmit}
         onSkip={handleSkipResult}
+        beginnerMode={config.numberOfNumbers <= 5}
       />
     );
   }
 
   if (state.isComplete) {
+    // Mostrar resumen claro
     return (
       <div className="max-w-2xl mx-auto animate-fade-in">
         <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 text-center dark:bg-gray-800/90">
           <h2 className="text-3xl font-light text-gray-900 dark:text-white mb-6">
             Práctica Completada
           </h2>
-          
           <div className="mb-8">
             <div className="flex items-center justify-center gap-4 mb-6">
               <p className="text-gray-600 dark:text-gray-400">Números mostrados:</p>
@@ -189,7 +221,6 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
                 {state.showNumbersList ? 'Ocultar' : 'Ver lista'}
               </button>
             </div>
-            
             {state.showNumbersList && (
               <div className="flex flex-wrap justify-center gap-2 mb-6 animate-slide-up">
                 {state.numbersShown.map((num, index) => (
@@ -202,18 +233,28 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
                 ))}
               </div>
             )}
-            
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6">
-              <p className="text-blue-900 dark:text-blue-100 text-lg mb-2">Total de la suma:</p>
-              <p className="text-4xl font-light text-blue-900 dark:text-blue-100">
-                {state.total}
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-4">
+                <p className="text-blue-900 dark:text-blue-100 text-sm mb-1">Total de la suma:</p>
+                <p className="text-2xl font-light text-blue-900 dark:text-blue-100">{state.total}</p>
+              </div>
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl p-4">
+                <p className="text-green-900 dark:text-green-100 text-sm mb-1">Correctas:</p>
+                <p className="text-2xl font-light text-green-900 dark:text-green-100">{sessionData?.correctCount ?? 0}</p>
+              </div>
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-4">
+                <p className="text-yellow-900 dark:text-yellow-100 text-sm mb-1">Precisión:</p>
+                <p className="text-2xl font-light text-yellow-900 dark:text-yellow-100">{sessionData?.accuracy ?? 0}%</p>
+              </div>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-2xl p-4 mt-6">
+              <p className="text-purple-900 dark:text-purple-100 text-sm mb-1">XP Ganado:</p>
+              <p className="text-2xl font-light text-purple-900 dark:text-purple-100">{sessionData?.xpEarned ?? 0}</p>
             </div>
           </div>
-
           <div className="flex gap-4 justify-center flex-wrap">
             <button
-              onClick={() => onComplete(sessionData)}
+              onClick={startPractice}
               className="btn-secondary"
             >
               Nueva Práctica

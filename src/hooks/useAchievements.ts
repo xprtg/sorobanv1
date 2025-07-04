@@ -4,20 +4,38 @@ import { ACHIEVEMENTS } from '../constants/achievements';
 
 const STORAGE_KEY = 'soroban-achievements';
 
+function migrateAchievements(saved: Achievement[], current: Achievement[]): Achievement[] {
+  // Sincroniza logros: agrega nuevos, elimina obsoletos, actualiza campos
+  const byId = (arr: Achievement[]) => Object.fromEntries(arr.map(a => [a.id, a]));
+  const savedById = byId(saved);
+  const currentById = byId(current);
+  // Mantener progreso y fecha de desbloqueo si existe
+  return current.map(a => {
+    const prev = savedById[a.id];
+    return prev
+      ? { ...a, progress: prev.progress, unlocked: prev.unlocked, unlockedDate: prev.unlockedDate }
+      : { ...a };
+  });
+}
+
 export function useAchievements() {
   const [achievements, setAchievements] = useState<Achievement[]>(ACHIEVEMENTS);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load achievements from localStorage on mount
+  // Load achievements from localStorage on mount, migrando si es necesario
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setAchievements(parsed);
+        const migrated = migrateAchievements(parsed, ACHIEVEMENTS);
+        setAchievements(migrated);
       } catch (error) {
         console.error('Error loading achievements:', error);
+        setAchievements(ACHIEVEMENTS);
       }
+    } else {
+      setAchievements(ACHIEVEMENTS);
     }
     setIsLoaded(true);
   }, []);
@@ -45,48 +63,35 @@ export function useAchievements() {
     }));
   };
 
+  // Automatiza logros de progreso/performance
   const checkAchievements = (sessions: PracticeSession[], stats: UserStats) => {
     const newUnlockedAchievements: Achievement[] = [];
-
-    // First practice
-    if (stats.totalSessions >= 1) {
-      updateAchievement('first-practice', 1, true);
-    }
-
-    // Five sessions
-    updateAchievement('five-sessions', Math.min(stats.totalSessions, 5));
-
-    // First perfect
-    if (stats.exactMatches >= 1) {
-      updateAchievement('first-perfect', 1, true);
-    }
-
-    // Ten perfect
-    updateAchievement('ten-perfect', Math.min(stats.exactMatches, 10));
-
-    // Three day streak
-    updateAchievement('three-day-streak', Math.min(stats.currentStreak, 3));
-
-    // Week streak
-    updateAchievement('week-streak', Math.min(stats.currentStreak, 7));
-
+    // 1. Actualizar todos los logros con progressSource
+    achievements.forEach(achievement => {
+      if (achievement.progressSource && stats[achievement.progressSource] !== undefined) {
+        const value = stats[achievement.progressSource] as number;
+        updateAchievement(
+          achievement.id,
+          Math.min(value, achievement.maxProgress),
+          value >= achievement.maxProgress
+        );
+      }
+    });
+    // 2. Lógica especial para logros complejos (modos, velocidad, precisión, etc.)
     // Pro mode
     const proSessions = sessions.filter(s => s.config.numberOfNumbers === 20);
     if (proSessions.length >= 1) {
       updateAchievement('pro-mode', 1, true);
     }
-
     // Free mode master
     const freeModeSessions = sessions.filter(s => s.config.numberOfNumbers === -1);
     const totalFreeNumbers = freeModeSessions.reduce((sum, s) => sum + s.numbers.length, 0);
     updateAchievement('free-mode-master', Math.min(totalFreeNumbers, 50));
-
     // Speed demon
     const fastSessions = sessions.filter(s => s.duration < 30 && s.numbers.length >= 10);
     if (fastSessions.length >= 1) {
       updateAchievement('speed-demon', 1, true);
     }
-
     // Accuracy master
     const recentSessions = sessions.slice(-20);
     if (recentSessions.length >= 20) {
@@ -97,26 +102,17 @@ export function useAchievements() {
         updateAchievement('accuracy-master', recentSessions.filter(s => s.isCorrect).length);
       }
     }
-
-    // Month streak
-    updateAchievement('month-streak', Math.min(stats.currentStreak, 30));
-
     // Speed legend
     const ultraFastSessions = sessions.filter(s => s.duration < 60 && s.numbers.length >= 20);
     if (ultraFastSessions.length >= 1) {
       updateAchievement('speed-legend', 1, true);
     }
-
-    // Ultimate streak
-    updateAchievement('ultimate-streak', Math.min(stats.currentStreak, 100));
-
-    // Check for newly unlocked achievements
+    // 3. Detectar nuevos logros desbloqueados
     achievements.forEach(achievement => {
       if (!achievement.unlocked && achievement.progress >= achievement.maxProgress) {
         newUnlockedAchievements.push(achievement);
       }
     });
-
     return newUnlockedAchievements;
   };
 

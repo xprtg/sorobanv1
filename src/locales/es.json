@@ -136,5 +136,21 @@
     "achievementUnlocked": "¡Logro desbloqueado!",
     "streakMilestone": "¡Nueva racha alcanzada!",
     "dailyReminder": "Es hora de practicar"
+  },
+  "tutorial": {
+    "intro": {
+      "title": "¿Qué es el Soroban?",
+      "content": "El soroban es el ábaco japonés, una herramienta milenaria para calcular y entrenar la mente. Aprenderás a sumar y visualizar números de forma rápida y divertida."
+    },
+    "structure": {
+      "title": "Estructura del Soroban",
+      "content": "El soroban tiene columnas (cada una representa una cifra) y cuentas superiores (valen 5) e inferiores (valen 1). Aprende a identificar cada parte."
+    },
+    "step": "Paso",
+    "of": "de",
+    "next": "Siguiente",
+    "back": "Volver",
+    "exit": "Salir del tutorial",
+    "finish": "Finalizar tutorial"
   }
 } 
