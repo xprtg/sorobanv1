@@ -19,6 +19,7 @@ import { initLanguage, t, getCurrentLanguage, setLanguage, getAvailableLanguages
 import { formatNumber, formatDate } from './utils/i18n';
 import { PracticeSession, DifficultyPreset, UserStats } from './types';
 import { DIFFICULTY_PRESETS } from './constants/presets';
+import { TutorialWizard } from './components/TutorialWizard';
 
 function App() {
   // Initialize language
@@ -32,6 +33,7 @@ function App() {
   const [showDifficultySelector, setShowDifficultySelector] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyPreset>(DIFFICULTY_PRESETS[0]);
   const [isPracticeActive, setIsPracticeActive] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   // Hooks
   const { stats, currentLevel, nextLevel, xpProgress, levelUpNotification, closeLevelUpNotification, updateStatsFromSession } = useLevels();
@@ -351,22 +353,36 @@ function App() {
       </nav>
 
       {/* Modals */}
-      {showConfig && (
-        <ConfigModal
-          preferences={preferences}
-          onUpdatePreferences={updatePreferences}
-          onClose={() => setShowConfig(false)}
-        />
-      )}
+      <ConfigModal
+        config={preferences}
+        onStart={updatePreferences}
+        isOpen={showConfig}
+        onClose={() => setShowConfig(false)}
+      />
 
-      {showDifficultySelector && (
+      {showDifficultySelector && !showTutorial && (
         <DifficultySelector
           onSelectPreset={(difficulty: DifficultyPreset) => {
             setSelectedDifficulty(difficulty);
             setShowDifficultySelector(false);
           }}
-          onCustomMode={() => setShowConfig(true)}
+          onCustomMode={() => {
+            setShowDifficultySelector(false);
+            setShowTutorial(false);
+            setShowConfig(true);
+          }}
+          onTutorial={() => {
+            setShowTutorial(true);
+          }}
         />
+      )}
+
+      {/* Modal del tutorial */}
+      {showTutorial && (
+        <TutorialWizard onExit={() => {
+          setShowTutorial(false);
+          setShowDifficultySelector(true);
+        }} />
       )}
 
       {/* Achievements Panel */}

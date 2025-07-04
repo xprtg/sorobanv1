@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTutorial } from '../hooks/useTutorial';
 import { t } from '../utils/i18n';
+import { ModalBase } from './ModalBase';
 
 const steps = [
   {
@@ -53,8 +54,18 @@ export function TutorialWizard({ onExit }: { onExit: () => void }) {
   const isLast = status.currentStep === steps.length - 1;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate-fade-in">
+    <ModalBase isOpen={true} onClose={onExit} maxWidth="max-w-lg">
+      <div className="p-8 relative">
+        <button
+          onClick={onExit}
+          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold focus:outline-none"
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+        <h2 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-center">
+          {step.title}
+        </h2>
         {/* Barra de progreso */}
         <div className="flex items-center mb-6">
           <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -70,8 +81,7 @@ export function TutorialWizard({ onExit }: { onExit: () => void }) {
         {/* Ilustración */}
         <div className="flex justify-center mb-4">{step.illustration}</div>
         {/* Título y contenido */}
-        <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{step.title}</h2>
-        <p className="text-gray-700 dark:text-gray-300 mb-6">{step.content}</p>
+        <p className="text-gray-700 dark:text-gray-300 mb-6 text-center">{step.content}</p>
         {/* Navegación */}
         <div className="flex justify-between items-center mt-6">
           <button
@@ -89,7 +99,7 @@ export function TutorialWizard({ onExit }: { onExit: () => void }) {
               {t('tutorial.back')}
             </button>
             <button
-              onClick={isLast ? completeTutorial : nextStep}
+              onClick={isLast ? () => { completeTutorial(); onExit(); } : nextStep}
               className="px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors"
             >
               {isLast ? t('tutorial.finish') : t('tutorial.next')}
@@ -97,6 +107,6 @@ export function TutorialWizard({ onExit }: { onExit: () => void }) {
           </div>
         </div>
       </div>
-    </div>
+    </ModalBase>
   );
 } 

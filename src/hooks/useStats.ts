@@ -13,6 +13,14 @@ const defaultStats: UserStats = {
   averageAccuracy: 0,
   lastPracticeDate: '',
   totalNumbersPracticed: 0,
+  totalXP: 0,
+  currentLevel: 1,
+  currentXP: 0,
+  xpToNextLevel: 0,
+  bestSessionAccuracy: 0,
+  bestSessionSpeed: 0,
+  longestSession: 0,
+  totalPerfectSessions: 0,
 };
 
 export function useStats() {
@@ -48,9 +56,12 @@ export function useStats() {
 
     const totalSessions = sessions.length;
     const totalPracticeTime = sessions.reduce((sum, s) => sum + s.duration, 0);
-    const exactMatches = sessions.filter(s => s.isCorrect).length;
+    // Sumar aciertos individuales (correctCount) y calcular precisión promedio real
+    const exactMatches = sessions.reduce((sum, s) => sum + (typeof s.correctCount === 'number' ? s.correctCount : (s.isCorrect ? s.numbers.length : 0)), 0);
     const totalNumbersPracticed = sessions.reduce((sum, s) => sum + s.numbers.length, 0);
-    const averageAccuracy = exactMatches / totalSessions;
+    const averageAccuracy = totalNumbersPracticed > 0
+      ? sessions.reduce((sum, s) => sum + (typeof s.accuracy === 'number' ? s.accuracy : (s.isCorrect ? 100 : 0)), 0) / totalSessions
+      : 0;
 
     // Calculate streak
     const sortedSessions = sessions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -116,6 +127,14 @@ export function useStats() {
       averageAccuracy,
       lastPracticeDate: sortedSessions[0].date,
       totalNumbersPracticed,
+      totalXP: stats.totalXP ?? 0,
+      currentLevel: stats.currentLevel ?? 1,
+      currentXP: stats.currentXP ?? 0,
+      xpToNextLevel: stats.xpToNextLevel ?? 0,
+      bestSessionAccuracy: stats.bestSessionAccuracy ?? 0,
+      bestSessionSpeed: stats.bestSessionSpeed ?? 0,
+      longestSession: stats.longestSession ?? 0,
+      totalPerfectSessions: stats.totalPerfectSessions ?? 0,
     };
 
     setStats(newStats);

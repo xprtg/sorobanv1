@@ -77,7 +77,7 @@ export function SorobanPractice({ config, onComplete, onStop }: SorobanPracticeP
         duration,
         correctCount,
         totalAnswered,
-        accuracy,
+        accuracy, // porcentaje de aciertos de la sesión
         answers,
         xpEarned: 0,
       };

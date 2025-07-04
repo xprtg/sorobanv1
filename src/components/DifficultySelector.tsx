@@ -4,9 +4,10 @@ import { DIFFICULTY_PRESETS } from '../constants/presets';
 interface DifficultySelectorProps {
   onSelectPreset: (preset: DifficultyPreset) => void;
   onCustomMode: () => void;
+  onTutorial?: () => void;
 }
 
-export function DifficultySelector({ onSelectPreset, onCustomMode }: DifficultySelectorProps) {
+export function DifficultySelector({ onSelectPreset, onCustomMode, onTutorial }: DifficultySelectorProps) {
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
       <div className="text-center mb-8">
@@ -18,8 +19,24 @@ export function DifficultySelector({ onSelectPreset, onCustomMode }: DifficultyS
         </p>
       </div>
 
+      {/* Botón especial para el tutorial */}
+      <div className="mb-8 flex justify-center">
+        <button
+          onClick={onTutorial}
+          className="group relative bg-cyan-50 dark:bg-cyan-900/80 border-2 border-cyan-400 rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+        >
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-cyan-500 text-white text-3xl mb-4 group-hover:scale-110 transition-transform duration-200">
+              🎓
+            </div>
+            <h3 className="text-xl font-bold text-cyan-700 dark:text-cyan-200 mb-2">Tutorial</h3>
+            <p className="text-base text-cyan-800 dark:text-cyan-100 mb-2">Aprende a usar el Soroban paso a paso</p>
+          </div>
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {DIFFICULTY_PRESETS.map((preset) => (
+        {DIFFICULTY_PRESETS.filter(preset => preset.id !== 'tutorial').map((preset) => (
           <button
             key={preset.id}
             onClick={() => onSelectPreset(preset)}

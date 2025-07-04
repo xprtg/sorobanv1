@@ -10,6 +10,7 @@ export interface PracticeConfig {
   fontSize: 'normal' | 'large';
   fontFamily: 'sf-pro' | 'inter' | 'atkinson';
   highContrast: boolean;
+  sequenceMode?: boolean;
 }
 
 export interface PracticeState {
@@ -43,6 +44,7 @@ export interface UserPreferences {
   language: 'es' | 'en';
   soundEnabled: boolean;
   expertMode: boolean;
+  sequenceMode?: boolean;
 }
 
 export interface DifficultyPreset {
@@ -68,6 +70,8 @@ export interface PracticeSession {
   difference?: number;
   duration: number;
   xpEarned: number;
+  accuracy?: number; // porcentaje de aciertos de la sesión
+  correctCount?: number; // número de respuestas correctas
 }
 
 export interface Achievement {
