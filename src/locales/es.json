@@ -1,0 +1,140 @@
+{
+  "app": {
+    "title": "Soroban Practice 2.0",
+    "subtitle": "Entrenamiento Mental con Ábaco Japonés"
+  },
+  "practice": {
+    "start": "Comenzar Práctica",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "stop": "Detener",
+    "next": "Siguiente",
+    "result": "Resultado",
+    "correct": "¡Correcto!",
+    "incorrect": "Incorrecto",
+    "yourAnswer": "Tu respuesta",
+    "actualAnswer": "Respuesta correcta",
+    "timeUp": "¡Tiempo agotado!",
+    "sessionComplete": "Sesión completada",
+    "practiceAgain": "Practicar de nuevo",
+    "changeDifficulty": "Cambiar dificultad",
+    "customMode": "Modo personalizado",
+    "freeMode": "Modo libre",
+    "expertMode": "Modo experto"
+  },
+  "difficulty": {
+    "title": "Seleccionar Dificultad",
+    "beginner": "Principiante",
+    "easy": "Fácil",
+    "medium": "Intermedio",
+    "hard": "Difícil",
+    "pro": "Pro",
+    "free": "Entrenamiento Libre",
+    "custom": "Personalizado"
+  },
+  "stats": {
+    "title": "Estadísticas",
+    "totalSessions": "Sesiones totales",
+    "totalTime": "Tiempo total",
+    "averageAccuracy": "Precisión promedio",
+    "bestAccuracy": "Mejor precisión",
+    "currentStreak": "Racha actual",
+    "bestStreak": "Mejor racha",
+    "totalNumbers": "Números practicados",
+    "level": "Nivel",
+    "xp": "XP",
+    "xpToNext": "XP para siguiente nivel"
+  },
+  "achievements": {
+    "title": "Logros",
+    "categories": {
+      "all": "Todos",
+      "progress": "Progreso",
+      "performance": "Rendimiento",
+      "challenges": "Desafíos",
+      "style": "Estilo"
+    },
+    "unlocked": "Desbloqueados",
+    "locked": "Bloqueados",
+    "progress": "Progreso",
+    "secret": "Secreto"
+  },
+  "profile": {
+    "title": "Perfil de Usuario",
+    "name": "Nombre",
+    "nickname": "Apodo",
+    "level": "Nivel",
+    "totalXP": "XP Total",
+    "averageAccuracy": "Precisión Promedio",
+    "bestMarks": "Mejores Marcas",
+    "unlockedBadges": "Insignias Desbloqueadas",
+    "unlockedThemes": "Temas Desbloqueados",
+    "unlockedAvatars": "Avatares Desbloqueados",
+    "presentationMode": "Modo Presentación",
+    "editProfile": "Editar Perfil",
+    "saveChanges": "Guardar Cambios",
+    "cancel": "Cancelar"
+  },
+  "help": {
+    "title": "Ayuda y Guía",
+    "howToUse": "Cómo usar la app",
+    "practiceModes": "Modos de práctica",
+    "achievements": "Logros y progreso",
+    "tips": "Consejos para mejorar",
+    "keyboardShortcuts": "Atajos de teclado",
+    "accessibility": "Accesibilidad",
+    "contact": "Contacto y soporte"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "theme": "Tema",
+    "fontSize": "Tamaño de fuente",
+    "fontFamily": "Familia de fuente",
+    "highContrast": "Alto contraste",
+    "soundEffects": "Efectos de sonido",
+    "voiceReading": "Lectura por voz",
+    "notifications": "Notificaciones",
+    "keyboardShortcuts": "Atajos de teclado",
+    "exportData": "Exportar datos",
+    "resetProgress": "Reiniciar progreso"
+  },
+  "navigation": {
+    "practice": "Practicar",
+    "stats": "Estadísticas",
+    "achievements": "Logros",
+    "profile": "Perfil",
+    "help": "Ayuda",
+    "settings": "Configuración"
+  },
+  "common": {
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "themes": {
+    "default": "Predeterminado",
+    "zen": "Zen",
+    "retro": "Retro",
+    "matrix": "Matrix",
+    "divine": "Divino",
+    "pure": "Puro"
+  },
+  "fonts": {
+    "sfPro": "SF Pro Display",
+    "inter": "Inter",
+    "atkinson": "Atkinson Hyperlegible"
+  },
+  "notifications": {
+    "levelUp": "¡Subiste de nivel!",
+    "achievementUnlocked": "¡Logro desbloqueado!",
+    "streakMilestone": "¡Nueva racha alcanzada!",
+    "dailyReminder": "Es hora de practicar"
+  }
+} 

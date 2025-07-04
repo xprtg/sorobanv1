@@ -1,0 +1,140 @@
+{
+  "app": {
+    "title": "Soroban Practice 2.0",
+    "subtitle": "Mental Training with Japanese Abacus"
+  },
+  "practice": {
+    "start": "Start Practice",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop",
+    "next": "Next",
+    "result": "Result",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "yourAnswer": "Your answer",
+    "actualAnswer": "Correct answer",
+    "timeUp": "Time's up!",
+    "sessionComplete": "Session completed",
+    "practiceAgain": "Practice again",
+    "changeDifficulty": "Change difficulty",
+    "customMode": "Custom mode",
+    "freeMode": "Free mode",
+    "expertMode": "Expert mode"
+  },
+  "difficulty": {
+    "title": "Select Difficulty",
+    "beginner": "Beginner",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "pro": "Pro",
+    "free": "Free Training",
+    "custom": "Custom"
+  },
+  "stats": {
+    "title": "Statistics",
+    "totalSessions": "Total sessions",
+    "totalTime": "Total time",
+    "averageAccuracy": "Average accuracy",
+    "bestAccuracy": "Best accuracy",
+    "currentStreak": "Current streak",
+    "bestStreak": "Best streak",
+    "totalNumbers": "Numbers practiced",
+    "level": "Level",
+    "xp": "XP",
+    "xpToNext": "XP to next level"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "categories": {
+      "all": "All",
+      "progress": "Progress",
+      "performance": "Performance",
+      "challenges": "Challenges",
+      "style": "Style"
+    },
+    "unlocked": "Unlocked",
+    "locked": "Locked",
+    "progress": "Progress",
+    "secret": "Secret"
+  },
+  "profile": {
+    "title": "User Profile",
+    "name": "Name",
+    "nickname": "Nickname",
+    "level": "Level",
+    "totalXP": "Total XP",
+    "averageAccuracy": "Average Accuracy",
+    "bestMarks": "Best Marks",
+    "unlockedBadges": "Unlocked Badges",
+    "unlockedThemes": "Unlocked Themes",
+    "unlockedAvatars": "Unlocked Avatars",
+    "presentationMode": "Presentation Mode",
+    "editProfile": "Edit Profile",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "help": {
+    "title": "Help & Guide",
+    "howToUse": "How to use the app",
+    "practiceModes": "Practice modes",
+    "achievements": "Achievements and progress",
+    "tips": "Tips to improve",
+    "keyboardShortcuts": "Keyboard shortcuts",
+    "accessibility": "Accessibility",
+    "contact": "Contact and support"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "fontSize": "Font size",
+    "fontFamily": "Font family",
+    "highContrast": "High contrast",
+    "soundEffects": "Sound effects",
+    "voiceReading": "Voice reading",
+    "notifications": "Notifications",
+    "keyboardShortcuts": "Keyboard shortcuts",
+    "exportData": "Export data",
+    "resetProgress": "Reset progress"
+  },
+  "navigation": {
+    "practice": "Practice",
+    "stats": "Statistics",
+    "achievements": "Achievements",
+    "profile": "Profile",
+    "help": "Help",
+    "settings": "Settings"
+  },
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "themes": {
+    "default": "Default",
+    "zen": "Zen",
+    "retro": "Retro",
+    "matrix": "Matrix",
+    "divine": "Divine",
+    "pure": "Pure"
+  },
+  "fonts": {
+    "sfPro": "SF Pro Display",
+    "inter": "Inter",
+    "atkinson": "Atkinson Hyperlegible"
+  },
+  "notifications": {
+    "levelUp": "Level up!",
+    "achievementUnlocked": "Achievement unlocked!",
+    "streakMilestone": "New streak milestone!",
+    "dailyReminder": "Time to practice"
+  }
+} 

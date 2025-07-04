@@ -6,7 +6,7 @@ export interface PracticeConfig {
   voiceEnabled: boolean;
   darkMode: boolean;
   showRealTimeSum: boolean;
-  visualStyle: 'apple' | 'professional' | 'dojo' | 'neumorphism' | 'minimal-dark';
+  visualStyle: 'apple' | 'professional' | 'dojo' | 'neumorphism' | 'minimal-dark' | 'zen' | 'retro' | 'matrix';
   fontSize: 'normal' | 'large';
   fontFamily: 'sf-pro' | 'inter' | 'atkinson';
   highContrast: boolean;
@@ -35,11 +35,14 @@ export interface UserPreferences {
   voiceEnabled: boolean;
   darkMode: boolean;
   showRealTimeSum: boolean;
-  visualStyle: 'apple' | 'professional' | 'dojo' | 'neumorphism' | 'minimal-dark';
+  visualStyle: 'apple' | 'professional' | 'dojo' | 'neumorphism' | 'minimal-dark' | 'zen' | 'retro' | 'matrix';
   fontSize: 'normal' | 'large';
   fontFamily: 'sf-pro' | 'inter' | 'atkinson';
   highContrast: boolean;
   notificationsEnabled: boolean;
+  language: 'es' | 'en';
+  soundEnabled: boolean;
+  expertMode: boolean;
 }
 
 export interface DifficultyPreset {
@@ -64,6 +67,7 @@ export interface PracticeSession {
   isCorrect?: boolean;
   difference?: number;
   duration: number;
+  xpEarned: number;
 }
 
 export interface Achievement {
@@ -71,12 +75,15 @@ export interface Achievement {
   name: string;
   description: string;
   icon: string;
-  category: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  category: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'progress' | 'performance' | 'challenges' | 'style';
+  tier: 'bronze' | 'silver' | 'gold' | 'platinum';
   unlocked: boolean;
   unlockedDate?: string;
   progress: number;
   maxProgress: number;
   color: string;
+  isSecret: boolean;
+  reward?: Reward;
 }
 
 export interface UserStats {
@@ -89,6 +96,14 @@ export interface UserStats {
   averageAccuracy: number;
   lastPracticeDate: string;
   totalNumbersPracticed: number;
+  totalXP: number;
+  currentLevel: number;
+  currentXP: number;
+  xpToNextLevel: number;
+  bestSessionAccuracy: number;
+  bestSessionSpeed: number;
+  longestSession: number;
+  totalPerfectSessions: number;
 }
 
 export interface WeeklyChallenge {
@@ -109,4 +124,53 @@ export interface KeyboardShortcut {
   key: string;
   action: string;
   description: string;
+}
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  nickname?: string;
+  avatar: string;
+  level: number;
+  totalXP: number;
+  joinDate: string;
+  preferences: UserPreferences;
+  unlockedThemes: string[];
+  unlockedAvatars: string[];
+  achievements: string[];
+  bestSessions: PracticeSession[];
+}
+
+export interface Level {
+  level: number;
+  name: string;
+  xpRequired: number;
+  rewards: Reward[];
+  color: string;
+  icon: string;
+}
+
+export interface Reward {
+  type: 'theme' | 'avatar' | 'effect' | 'badge';
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  unlocked: boolean;
+}
+
+export interface Localization {
+  [key: string]: {
+    [key: string]: string | { [key: string]: string };
+  };
+}
+
+export interface TopSession {
+  id: string;
+  date: string;
+  accuracy: number;
+  speed: number;
+  duration: number;
+  numbersCount: number;
+  xpEarned: number;
 } 
